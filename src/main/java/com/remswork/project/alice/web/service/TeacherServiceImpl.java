@@ -27,6 +27,60 @@ public class TeacherServiceImpl implements TeacherService {
 	private TargetPropertiesBean targetProperties;
 	private final String payload = "teacher";
 	
+	@Override
+	public Teacher getTeacherById(long id) throws TeacherException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			uri.append("/");
+			uri.append(id);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target.request().get();
+			
+			if(response.getStatus() == 200) {
+				return (Teacher) response.readEntity(Teacher.class);
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new TeacherServiceException(message.getMessage());
+			}else
+				throw new TeacherServiceException("The request might invalid or server is down");
+		}catch(TeacherServiceException e) {
+			throw new TeacherException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Teacher> getTeacherList() throws TeacherException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target.request().get();
+			
+			if(response.getStatus() == 200) {
+				return (List<Teacher>) response.readEntity(new GenericType<List<Teacher>>() {});
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new TeacherServiceException(message.getMessage());
+			}else
+				throw new TeacherServiceException("The request might invalid or server is down");
+		}catch(TeacherServiceException e) {
+			throw new TeacherException(e.getMessage());
+		}
+	}
+	
 	@Deprecated
 	@Override
 	public Teacher addTeacher(Teacher teacher) throws TeacherException {
@@ -84,90 +138,6 @@ public class TeacherServiceImpl implements TeacherService {
 		}
 	}
 
-	@Override
-	public Teacher deleteTeacherById(long id) throws TeacherException {
-		try {
-			StringBuilder uri = new StringBuilder();
-			uri.append(targetProperties.getDomain());
-			uri.append("/");
-			uri.append(targetProperties.getBaseUri());
-			uri.append("/");
-			uri.append(payload);
-			uri.append("/");
-			uri.append(id);
-			
-			Client client = ClientBuilder.newClient();
-			WebTarget target = client.target(uri.toString());
-			Builder builder = target.request();
-			builder.accept("application/json");
-			Response response = builder.delete();
-			
-			if(response.getStatus() == 200) {
-				return (Teacher) response.readEntity(Teacher.class);
-			}else if(response.getStatus() == 400){
-				Message message = (Message) response.readEntity(Message.class);
-				throw new TeacherServiceException(message.getMessage());
-			}else
-				throw new TeacherServiceException("The request might invalid or server is down");
-		}catch(TeacherServiceException e) {
-			throw new TeacherException(e.getMessage());
-		}
-	}
-
-	@Override
-	public Teacher getTeacherById(long id) throws TeacherException {
-		try {
-			StringBuilder uri = new StringBuilder();
-			uri.append(targetProperties.getDomain());
-			uri.append("/");
-			uri.append(targetProperties.getBaseUri());
-			uri.append("/");
-			uri.append(payload);
-			uri.append("/");
-			uri.append(id);
-			
-			Client client = ClientBuilder.newClient();
-			WebTarget target = client.target(uri.toString());
-			Response response = target.request().get();
-			
-			if(response.getStatus() == 200) {
-				return (Teacher) response.readEntity(Teacher.class);
-			}else if(response.getStatus() == 404){
-				Message message = (Message) response.readEntity(Message.class);
-				throw new TeacherServiceException(message.getMessage());
-			}else
-				throw new TeacherServiceException("The request might invalid or server is down");
-		}catch(TeacherServiceException e) {
-			throw new TeacherException(e.getMessage());
-		}
-	}
-
-	@Override
-	public List<Teacher> getTeacherList() throws TeacherException {
-		try {
-			StringBuilder uri = new StringBuilder();
-			uri.append(targetProperties.getDomain());
-			uri.append("/");
-			uri.append(targetProperties.getBaseUri());
-			uri.append("/");
-			uri.append(payload);
-			
-			Client client = ClientBuilder.newClient();
-			WebTarget target = client.target(uri.toString());
-			Response response = target.request().get();
-			
-			if(response.getStatus() == 200) {
-				return (List<Teacher>) response.readEntity(new GenericType<List<Teacher>>() {});
-			}else if(response.getStatus() == 404){
-				Message message = (Message) response.readEntity(Message.class);
-				throw new TeacherServiceException(message.getMessage());
-			}else
-				throw new TeacherServiceException("The request might invalid or server is down");
-		}catch(TeacherServiceException e) {
-			throw new TeacherException(e.getMessage());
-		}
-	}
-
 	@Deprecated
 	@Override
 	public Teacher updateTeacherById(long id, Teacher newTeacher) throws TeacherException {
@@ -216,6 +186,36 @@ public class TeacherServiceImpl implements TeacherService {
 			Builder builder = target.queryParam("departmentId", departmentId).request();
 			builder.accept("application/json");
 			Response response = builder.put(Entity.json(newTeacher));
+			
+			if(response.getStatus() == 200) {
+				return (Teacher) response.readEntity(Teacher.class);
+			}else if(response.getStatus() == 400){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new TeacherServiceException(message.getMessage());
+			}else
+				throw new TeacherServiceException("The request might invalid or server is down");
+		}catch(TeacherServiceException e) {
+			throw new TeacherException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public Teacher deleteTeacherById(long id) throws TeacherException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			uri.append("/");
+			uri.append(id);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Builder builder = target.request();
+			builder.accept("application/json");
+			Response response = builder.delete();
 			
 			if(response.getStatus() == 200) {
 				return (Teacher) response.readEntity(Teacher.class);

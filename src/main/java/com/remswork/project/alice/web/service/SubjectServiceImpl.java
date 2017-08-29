@@ -13,22 +13,22 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.remswork.project.alice.exception.ScheduleException;
-import com.remswork.project.alice.model.Schedule;
+import com.remswork.project.alice.exception.SubjectException;
+import com.remswork.project.alice.model.Subject;
 import com.remswork.project.alice.model.support.Message;
-import com.remswork.project.alice.service.ScheduleService;
+import com.remswork.project.alice.service.SubjectService;
 import com.remswork.project.alice.web.bean.TargetPropertiesBean;
-import com.remswork.project.alice.web.service.exception.ScheduleServiceException;
+import com.remswork.project.alice.web.service.exception.SubjectServiceException;
 
 @Service
-public class ScheduleServiceImpl implements ScheduleService {
+public class SubjectServiceImpl implements SubjectService {
 
 	@Autowired
 	private TargetPropertiesBean targetProperties;
-	private final String payload = "schedule";
+	private final String payload = "subject";
 	
 	@Override
-	public Schedule getScheduleById(long id) throws ScheduleException {
+	public Subject getSubjectById(long id) throws SubjectException {
 		try {
 			StringBuilder uri = new StringBuilder();
 			uri.append(targetProperties.getDomain());
@@ -44,19 +44,19 @@ public class ScheduleServiceImpl implements ScheduleService {
 			Response response = target.request().get();
 			
 			if(response.getStatus() == 200) {
-				return (Schedule) response.readEntity(Schedule.class);
+				return (Subject) response.readEntity(Subject.class);
 			}else if(response.getStatus() == 404){
 				Message message = (Message) response.readEntity(Message.class);
-				throw new ScheduleServiceException(message.getMessage());
+				throw new SubjectServiceException(message.getMessage());
 			}else
-				throw new ScheduleServiceException("The request might invalid or server is down");
-		}catch(ScheduleServiceException e) {
-			throw new ScheduleException(e.getMessage());
+				throw new SubjectServiceException("The request might invalid or server is down");
+		}catch(SubjectServiceException e) {
+			throw new SubjectException(e.getMessage());
 		}
 	}
 
 	@Override
-	public List<Schedule> getScheduleList() throws ScheduleException {
+	public List<Subject> getSubjectList() throws SubjectException {
 		try {
 			StringBuilder uri = new StringBuilder();
 			uri.append(targetProperties.getDomain());
@@ -70,19 +70,19 @@ public class ScheduleServiceImpl implements ScheduleService {
 			Response response = target.request().get();
 			
 			if(response.getStatus() == 200) {
-				return (List<Schedule>) response.readEntity(new GenericType<List<Schedule>>() {});
+				return (List<Subject>) response.readEntity(new GenericType<List<Subject>>() {});
 			}else if(response.getStatus() == 404){
 				Message message = (Message) response.readEntity(Message.class);
-				throw new ScheduleServiceException(message.getMessage());
+				throw new SubjectServiceException(message.getMessage());
 			}else
-				throw new ScheduleServiceException("The request might invalid or server is down");
-		}catch(ScheduleServiceException e) {
-			throw new ScheduleException(e.getMessage());
+				throw new SubjectServiceException("The request might invalid or server is down");
+		}catch(SubjectServiceException e) {
+			throw new SubjectException(e.getMessage());
 		}
 	}
 	
 	@Override
-	public Schedule addSchedule(Schedule schedule) throws ScheduleException {
+	public Subject addSubject(Subject schedule) throws SubjectException {
 		try {
 			StringBuilder uri = new StringBuilder();
 			uri.append(targetProperties.getDomain());
@@ -98,19 +98,19 @@ public class ScheduleServiceImpl implements ScheduleService {
 			Response response = builder.post(Entity.json(schedule));
 			
 			if(response.getStatus() == 201) {
-				return (Schedule) response.readEntity(Schedule.class);
+				return (Subject) response.readEntity(Subject.class);
 			}else if(response.getStatus() == 400){
 				Message message = (Message) response.readEntity(Message.class);
-				throw new ScheduleServiceException(message.getMessage());
+				throw new SubjectServiceException(message.getMessage());
 			}else
-				throw new ScheduleServiceException("The request might invalid or server is down");
-		}catch(ScheduleServiceException e) {
-			throw new ScheduleException(e.getMessage());
+				throw new SubjectServiceException("The request might invalid or server is down");
+		}catch(SubjectServiceException e) {
+			throw new SubjectException(e.getMessage());
 		}
 	}
 
 	@Override
-	public Schedule updateScheduleById(long id, Schedule newSchedule) throws ScheduleException {
+	public Subject updateSubjectById(long id, Subject newSubject) throws SubjectException {
 		try {
 			StringBuilder uri = new StringBuilder();
 			uri.append(targetProperties.getDomain());
@@ -125,22 +125,22 @@ public class ScheduleServiceImpl implements ScheduleService {
 			WebTarget target = client.target(uri.toString());
 			Builder builder = target.request();
 			builder.accept("application/json");
-			Response response = builder.put(Entity.json(newSchedule));
+			Response response = builder.put(Entity.json(newSubject));
 			
 			if(response.getStatus() == 200) {
-				return (Schedule) response.readEntity(Schedule.class);
+				return (Subject) response.readEntity(Subject.class);
 			}else if(response.getStatus() == 400){
 				Message message = (Message) response.readEntity(Message.class);
-				throw new ScheduleServiceException(message.getMessage());
+				throw new SubjectServiceException(message.getMessage());
 			}else
-				throw new ScheduleServiceException("The request might invalid or server is down");
-		}catch(ScheduleServiceException e) {
-			throw new ScheduleException(e.getMessage());
+				throw new SubjectServiceException("The request might invalid or server is down");
+		}catch(SubjectServiceException e) {
+			throw new SubjectException(e.getMessage());
 		}
 	}
 	
 	@Override
-	public Schedule deleteScheduleById(long id) throws ScheduleException {
+	public Subject deleteSubjectById(long id) throws SubjectException {
 		try {
 			StringBuilder uri = new StringBuilder();
 			uri.append(targetProperties.getDomain());
@@ -158,14 +158,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 			Response response = builder.delete();
 			
 			if(response.getStatus() == 200) {
-				return (Schedule) response.readEntity(Schedule.class);
+				return (Subject) response.readEntity(Subject.class);
 			}else if(response.getStatus() == 400){
 				Message message = (Message) response.readEntity(Message.class);
-				throw new ScheduleServiceException(message.getMessage());
+				throw new SubjectServiceException(message.getMessage());
 			}else
-				throw new ScheduleServiceException("The request might invalid or server is down");
-		}catch(ScheduleServiceException e) {
-			throw new ScheduleException(e.getMessage());
+				throw new SubjectServiceException("The request might invalid or server is down");
+		}catch(SubjectServiceException e) {
+			throw new SubjectException(e.getMessage());
 		}
 	}
 }
