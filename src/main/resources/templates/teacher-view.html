@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1" />
+		<title>Teacher Information</title>
+		<link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css" th:href="@{/css/bootstrap/bootstrap.min.css}"/>
+		<link rel="stylesheet" href="../css/style.css" th:href="@{/css/style.css}"/>
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-fixed-top" id="navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">Alice Project</a>
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+				  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+		
+		<div class="container">
+			<h2>Teacher Detail</h2>
+			<img src="#" width="100px" height="100px" />
+			<p th:text="${teacher.firstName} + ' ' + ${teacher.lastName}" />
+			<p th:text="'Email : ' + ${teacher.email}" />
+			<p th:text="'Department : ' + (${teacher.department} != null ? ${teacher.department.name} : 'none')" />
+			<br />
+			<div class="well">
+				<p>Schedule <span class="badge">0</span></p>
+			</div>
+		</div>
+		<script src="../js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+		<script src="../js/bootstrap/bootstrap.min.js" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+	</body>
+</html>
