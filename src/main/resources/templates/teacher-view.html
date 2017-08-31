@@ -4,6 +4,7 @@
 		<meta charset="ISO-8859-1" />
 		<title>Teacher Information</title>
 		<link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css" th:href="@{/css/bootstrap/bootstrap.min.css}"/>
+		
 		<link rel="stylesheet" href="../css/style.css" th:href="@{/css/style.css}"/>
 	</head>
 	<body>
@@ -18,15 +19,86 @@
 			</div>
 		</nav>
 		
-		<div class="container">
-			<h2>Teacher Detail</h2>
+		<div class="container" id="teacher-wrapper">
+			<h4>Teacher Detail</h4>
 			<img src="#" width="100px" height="100px" />
-			<p th:text="${teacher.firstName} + ' ' + ${teacher.lastName}" />
+			<b><p th:text="${teacher.firstName} + ' ' + ${teacher.lastName}" /></b>
 			<p th:text="'Email : ' + ${teacher.email}" />
 			<p th:text="'Department : ' + (${teacher.department} != null ? ${teacher.department.name} : 'none')" />
 			<br />
-			<div class="well">
-				<p>Schedule <span class="badge">0</span></p>
+			<div class="container" id="class-tab">
+				<div class="card text-center">
+					<div class="card-header">
+						<ul class="nav nav-tabs card-header-tabs">
+							<li class="nav-item">
+								<a class="nav-link active" href="#">Active</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Link</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link disabled" href="#">Disabled</a>
+							</li>
+						</ul>
+					</div>
+					<div class="card-block">
+						<h4 class="card-title">Special title treatment</h4>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-primary">Go somewhere</a>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="card">
+					<div class="card-header">
+						Featured
+					</div>
+					<div class="card-block">
+						<h4 class="card-title">Special title treatment</h4>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-primary">Go somewhere</a>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header">
+						Featured
+					</div>
+					<div class="card-block">
+						<h4 class="card-title">Special title treatment</h4>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-primary">Go somewhere</a>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header">
+						Featured
+					</div>
+					<div class="card-block">
+						<h4 class="card-title">Special title treatment</h4>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-primary">Go somewhere</a>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header">
+						Featured
+					</div>
+					<div class="card-block">
+						<h4 class="card-title">Special title treatment</h4>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-primary">Go somewhere</a>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header">
+						Featured
+					</div>
+					<div class="card-block">
+						<h4 class="card-title">Special title treatment</h4>
+						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="btn btn-primary">Go somewhere</a>
+					</div>
+				</div>
 			</div>
 		</div>
 		<script src="../js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>

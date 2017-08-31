@@ -1,9 +1,10 @@
 
-<div xmlns:th="http://www.thymeleaf.org" id="response-message" 
-	class="alert alert-info alert-dismissable">
-	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  <p th:text="${responseMessage}" />
+<div class="alert alert-info" role="alert" xmlns:th="http://www.thymeleaf.org" id="response-message">
+  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+  <span class="sr-only">Info:</span>
+  <p id="response-message" th:text="${responseMessage}" />
 </div>
+
 <table class="table" xmlns:th="http://www.thymeleaf.org">
 	<thead>
 	  <tr class="">

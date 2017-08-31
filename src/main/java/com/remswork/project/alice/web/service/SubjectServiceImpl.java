@@ -8,6 +8,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ public class SubjectServiceImpl implements SubjectService {
 			
 			Client client = ClientBuilder.newClient();
 			WebTarget target = client.target(uri.toString());
-			Response response = target.request().get();
+			Response response = target.request(MediaType.APPLICATION_XML).get();
 			
 			if(response.getStatus() == 200) {
 				return (List<Subject>) response.readEntity(new GenericType<List<Subject>>() {});

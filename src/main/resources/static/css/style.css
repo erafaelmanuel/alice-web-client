@@ -46,8 +46,8 @@ button {
 }
 
 #image-loading {
-	width: 150px;
-	height: 150px;
+	width: 70px;
+	height: 70px;
 	position: absolute;
     margin: auto;
     display: block;
@@ -55,4 +55,29 @@ button {
     top: 0px;
     left: 50%;
     transform: translate(-50%, 0);
+}
+
+#teacher-wrapper {
+	background-color : #fff;
+	padding: 5%;
+}
+
+.card {
+	width: 20rem;
+}
+
+p#response-message {
+	display: inline;
+}
+
+div.alert alert-info {
+	width: 100%;
+}
+
+div#class-tab {
+	margin: 0px auto;
+}
+
+.card text-center {
+	width: 75%;
 }

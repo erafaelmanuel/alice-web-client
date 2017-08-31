@@ -21,7 +21,7 @@ import com.remswork.project.alice.web.bean.TargetPropertiesBean;
 import com.remswork.project.alice.web.service.exception.StudentServiceException;
 
 @Service
-public class StudentServiceImp implements StudentService {
+public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private TargetPropertiesBean targetProperties;

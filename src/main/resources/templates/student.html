@@ -4,7 +4,7 @@
 	<meta charset="ISO-8859-1" />
 	<link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css" th:href="@{/css/bootstrap/bootstrap.min.css}"/>
 	<link rel="stylesheet" href="../css/style.css" th:href="@{/css/style.css}"/>
-	<title>Teacher information</title>
+	<title>Student information</title>
 	</head>
 	<body>
 		<div class="loading-pane">
@@ -22,19 +22,19 @@
 			</div>
 		</nav>
 			<div class="container" id="table-container">
-				<h2 id="label-title"><a href="/teacher">Teacher</a></h2>
+				<h2 id="label-title"><a href="/student">Student</a></h2>
 				<div class="row">
 					<div class="col-md-9">
-						<button type="button" class="btn" id="btn-add-teacher" data-toggle="modal" data-target="#add-teacher-modal">
-							<span class="glyphicon glyphicon-plus"></span> Add Teacher
+						<button type="button" class="btn" id="btn-add-student" data-toggle="modal" data-target="#add-student-modal">
+							<span class="glyphicon glyphicon-plus"></span> Add Student
 						</button>
 					</div>
 					<div class="col-md-3">
 						<form class="form-inline">
 							<div class="form-group">
-								<label class="sr-only" for="exampleInputAmount">Teacher</label>
+								<label class="sr-only" for="exampleInputAmount">Student</label>
 								<div class="input-group">
-									<input type="text" class="form-control" id="teacher-query" placeholder="Teacher id, name or email" />
+									<input type="text" class="form-control" id="student-query" placeholder="Student studentNumber, name" />
 									<div class="input-group-addon" id="btn-search"><span class="glyphicon glyphicon-search"></span></div>
 								</div>
 							  </div>
@@ -48,28 +48,34 @@
 						<thead>
 						  <tr class="">
 							<th>ID</th>
+							<th>StudentNumber</th>
 							<th>FirstName</th>
 							<th>MiddleName</th>
 							<th>LastName</th>
-							<th>Email</th>
+							<th>Gender</th>
+							<th>Age</th>
+							<th>Section</th>
 					
 						  </tr>
 						</thead>
 						<tbody>
-							<tr  th:each="teacher, iterStat : ${teacherList}" th:class="${iterStat.even} ? 'active' : 'default'">
-								<td th:text="${teacher.id}" />
-								<td th:text="${teacher.firstName}" />
-								<td th:text="${teacher.middleName}" />
-								<td th:text="${teacher.lastName}" />
-								<td><span class="label label-primary" th:text="${teacher.email}"></span></td>
+							<tr  th:each="student, iterStat : ${studentList}" th:class="${iterStat.even} ? 'active' : 'default'">
+								<td th:text="${student.id}" />
+								<td th:text="${student.studentNumber}" />
+								<td th:text="${student.firstName}" />
+								<td th:text="${student.middleName}" />
+								<td th:text="${student.lastName}" />
+								<td th:text="${student.gender}" />
+								<td th:text="${student.age}" />
+								<td th:text="(${student.section} != null ? ${student.section.name} : 'none')" />
 								<td>
-									<button type="button" class="btn btn-default" data-toggle="modal" th:attr="data-target='#update-teacher-modal-' + ${teacher.id}">
+									<button type="button" class="btn btn-default" data-toggle="modal" th:attr="data-target='#update-student-modal-' + ${student.id}">
 										<span class="glyphicon glyphicon-pencil"></span> Update
 									</button>
-									<button th:value="${teacher.id}" type="submit" class="btn btn-default" id="btn-delete"> 
+									<button th:value="${student.id}" type="submit" class="btn btn-default" id="btn-delete"> 
 										<span class="glyphicon glyphicon-remove"></span> Delete
 									</button>
-									<a th:href="'/teacher/view?id=' + ${teacher.id}">
+									<a th:href="'/student/view?id=' + ${student.id}">
 										<button type="button" class="btn btn-default" id="btn-view">
 												<span class="glyphicon glyphicon-zoom-in"></span> View
 										</button>
@@ -77,40 +83,48 @@
 								</td>
 								<td>
 									<!-- Modal -->
-									<div class="modal fade" th:id="'update-teacher-modal-' + ${teacher.id}" role="dialog">
+									<div class="modal fade" th:id="'update-student-modal-' + ${student.id}" role="dialog">
 										<div class="modal-dialog">
 											<!-- Modal content-->
 											<div class="modal-content">
 												<div class="modal-header">
-													<h4 class="modal-title">Update a Teacher</h4>
+													<h4 class="modal-title">Update a Student</h4>
 												</div>
 												<div class="modal-body">
-													<form action="/teacher/update" method="post" class="form-update-teacher">
-														<input type="hidden" name="id" th:value="${teacher.id}" />
+													<form action="/student/update" method="post" class="form-update-student">
+														<input type="hidden" name="id" th:value="${student.id}" />
+														<div class="form-group">
+															<label for="studentNumber">StudentNumber:</label>
+															<input name="studentNumber" type="text" class="form-control" id="studentNumber" th:value="${student.studentNumber}"/>
+														</div>
 														<div class="form-group">
 															<label for="firstName">FirstName:</label>
-															<input name="firstName" type="text" class="form-control" id="firstName" th:value="${teacher.firstName}"/>
+															<input name="firstName" type="text" class="form-control" id="firstName" th:value="${student.firstName}"/>
 														</div>
 														<div class="form-group">
 															<label for="middleName">MiddleName:</label>
-															<input name="middleName" type="text" class="form-control" id="middleName" th:value="${teacher.middleName}"/>
+															<input name="middleName" type="text" class="form-control" id="middleName" th:value="${student.middleName}"/>
 														</div>
 														<div class="form-group">
 															<label for="lastName">LastName:</label>
-															<input name="lastName" type="text" class="form-control" id="lastName" th:value="${teacher.lastName}"/>
+															<input name="lastName" type="text" class="form-control" id="lastName" th:value="${student.lastName}"/>
 														</div>
 														<div class="form-group">
-															<label for="email">Email:</label>
-															<input name="email" type="email" class="form-control" id="email" th:value="${teacher.email}"/>
+															<label for="gender">Gender:</label>
+															<input name="gender" type="text" class="form-control" id="gender" th:value="${student.gender}"/>
 														</div>
 														<div class="form-group">
-															<label>Department</label>
+															<label for="age">Age:</label>
+															<input name="age" type="text" class="form-control" id="age" th:value="${student.age}"/>
+														</div>
+														<div class="form-group">
+															<label>Section</label>
 															<div>
-																<select class="form-control" name="departmentId">
+																<select class="form-control" name="sectionId">
 																	<option value="0">None</option>
-																	<option th:each="department, iterStat : ${departmentList}" 
-																	th:selected="${teacher.department} != null ? (${teacher.department.id} == ${department.id} ? 'selected' : 'no') :'no'" 
-																	th:value="${department.id}" th:text="${department.name}" />
+																	<option th:each="section, iterStat : ${sectionList}" 
+																	th:selected="${student.section} != null ? (${student.section.id} == ${section.id} ? 'selected' : 'no') :'no'" 
+																	th:value="${section.id}" th:text="${section.name}" />
 																</select>
 															</div>
 														</div>
@@ -130,16 +144,20 @@
 				</div>
 			</div>
 			<!-- Modal -->
-			<div class="modal fade" id="add-teacher-modal" role="dialog">
+			<div class="modal fade" id="add-student-modal" role="dialog">
 				<div class="modal-dialog">
 			
 					<!-- Modal content-->
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title">Create a Teacher</h4>
+							<h4 class="modal-title">Create a Student</h4>
 						</div>
 						<div class="modal-body">
-							<form action="/teacher/add" method="post">
+							<form action="/student/add" method="post">
+								<div class="form-group">
+									<label for="studentNumber">StudentNumber:</label>
+									<input name="studentNumber" type="text" class="form-control" id="studentNumber" />
+								</div>
 								<div class="form-group">
 									<label for="firstName">FirstName:</label>
 									<input name="firstName" type="text" class="form-control" id="firstName" />
@@ -153,16 +171,20 @@
 									<input name="lastName" type="text" class="form-control" id="lastName" />
 								</div>
 								<div class="form-group">
-									<label for="email">Email:</label>
-									<input name="email" type="email" class="form-control" id="email" />
+									<label for="gender">Gender:</label>
+									<input name="gender" type="text" class="form-control" id="gender"/>
 								</div>
 								<div class="form-group">
-									<label>Department</label>
+									<label for="age">Age:</label>
+									<input name="age" type="text" class="form-control" id="age"/>
+								</div>
+								<div class="form-group">
+									<label>Section</label>
 									<div>
-										<select class="form-control" name="departmentId">
+										<select class="form-control" name="sectionId">
 											<option value="0">None</option>
-											<option th:each="department, iterStat : ${departmentList}" 
-											th:value="${department.id}" th:text="${department.name}" />
+											<option th:each="section, iterStat : ${sectionList}" 
+											th:value="${section.id}" th:text="${section.name}" />
 										</select>
 									</div>
 								</div>
@@ -183,9 +205,9 @@
 			var loading = $(".loading-pane");
 			$(document).on('click', 'button[id="btn-delete"]', function() {
 				var id = $(this).val();
-				if (confirm('Are you sure you want to delete the teacher with id : ' + id)) {
+				if (confirm('Are you sure you want to delete the student with id : ' + id)) {
 					loading.show();
-					$.post("/teacher/delete", {id : id}, function(data, status) {
+					$.post("/student/delete", {id : id}, function(data, status) {
 						$("#table-cus").html(data);	
 						loading.hide();
 						hideMessage(8000);
@@ -194,10 +216,10 @@
 			});
 			
 			$('#btn-search').click(function() {
-				var input = $("#teacher-query").val();
+				var input = $("#student-query").val();
 				if(input.trim() != "") {
 					loading.show();
-					$.post("/teacher/get", {query : input}, function(data, status) {
+					$.post("/student/get", {query : input}, function(data, status) {
 						$("#table-cus").html(data);
 						loading.hide();
 						hideMessage(8000, 2000);
