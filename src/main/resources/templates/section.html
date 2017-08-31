@@ -15,11 +15,11 @@
 				<div class="navbar-header">
 					<a class="navbar-brand" href="#">Alice Project</a>
 				</div>
-				
 				<ul class=" nav navbar-nav">
 				  <li class="home"><a href="#"><span></span> Class</a></li>
 				   <li class="home"><a href="/teacher"><span ></span> Teacher</a></li>
 				    <li class="home"><a href="/student"><span ></span> Student</a></li>
+				    <li class="home"><a href="/subject"><span ></span> Subject</a></li>
 				     <li class="home"><a href="/section"><span ></span> Section</a></li>
 				     <li class="home"><a href="#"><span ></span> Schedule</a></li>
 				    <li class="home"><a href="/department"><span></span> Department</a></li>
@@ -89,7 +89,7 @@
 														<input type="hidden" name="id" th:value="${section.id}" />
 														<div class="form-group">
 															<label for="name">Name:</label>
-															<input name="name" type="text" class="form-control" id="name" th:value="${section.name}"/>
+															<input name="name" type="text" class="form-control" id="name" placeholder="Section name" th:value="${section.name}" />
 														</div>
 														<div class="form-group">
 															<label>Department</label>

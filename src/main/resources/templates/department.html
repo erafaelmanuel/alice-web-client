@@ -20,6 +20,7 @@
 				  <li class="home"><a href="#"><span></span> Class</a></li>
 				   <li class="home"><a href="/teacher"><span ></span> Teacher</a></li>
 				    <li class="home"><a href="/student"><span ></span> Student</a></li>
+				    <li class="home"><a href="/subject"><span ></span> Subject</a></li>
 				     <li class="home"><a href="/section"><span ></span> Section</a></li>
 				     <li class="home"><a href="#"><span ></span> Schedule</a></li>
 				    <li class="home"><a href="/department"><span></span> Department</a></li>
@@ -124,11 +125,14 @@
 							<form action="/department/add" method="post">
 								<div class="form-group">
 									<label for="name">Name:</label>
-									<input name="name" type="text" class="form-control" id="name" />
+									<input name="name" type="text" class="form-control" id="name" required="required" />
 								</div>
 								<div class="form-group">
 									<label for="description">Description:</label>
-									<input name="description" type="text" class="form-control" id="description" />
+									<input name="description" type="text" class="form-control" id="description" required="required" />
+									<div class="invalid-feedback">
+       									 Please provide a description.
+      								</div>
 								</div>
 								<button type="submit" class="btn btn-default">Add</button>
 							</form>
