@@ -81,3 +81,27 @@ div#class-tab {
 .card text-center {
 	width: 75%;
 }
+
+#home{
+	
+	background-color: #16a085;
+	
+}
+
+	 
+.home{
+	display: inline-block;
+	float:left;
+	-webkit-transition: -webkit-transform 1s;
+	}
+.home:hover{
+	-webkit-box-shadow:rgb(110,110,110) 2px 2px  2px;
+	-webkit-transform:scale(1.1);
+}
+.home:active{
+	background-color : opacity: 1;
+}
+
+	 
+	 
+
