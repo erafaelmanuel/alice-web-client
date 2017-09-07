@@ -86,6 +86,208 @@ public class ClassServiceImpl implements ClassService {
 	}
 	
 	@Override
+	public List<Class> getClassListByStudentId(long studentId) throws ClassException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target.queryParam("studentId", studentId).request().get();
+			
+			if(response.getStatus() == 200) {
+				return (List<Class>) response.readEntity(new GenericType<List<Class>>() {});
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new ClassServiceException(message.getMessage());
+			}else
+				throw new ClassServiceException("The request might invalid or server is down");
+		}catch(ClassServiceException e) {
+			throw new ClassException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Class> getClassListBySubjectId(long subjectId) throws ClassException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target.queryParam("subjectId", subjectId).request().get();
+			
+			if(response.getStatus() == 200) {
+				return (List<Class>) response.readEntity(new GenericType<List<Class>>() {});
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new ClassServiceException(message.getMessage());
+			}else
+				throw new ClassServiceException("The request might invalid or server is down");
+		}catch(ClassServiceException e) {
+			throw new ClassException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Class> getClassListByTeacherId(long teacherId) throws ClassException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target.queryParam("teacherId", teacherId).request().get();
+			
+			if(response.getStatus() == 200) {
+				return (List<Class>) response.readEntity(new GenericType<List<Class>>() {});
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new ClassServiceException(message.getMessage());
+			}else
+				throw new ClassServiceException("The request might invalid or server is down");
+		}catch(ClassServiceException e) {
+			throw new ClassException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public Schedule getScheduleById(long classId, long scheduleId) throws ClassException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			uri.append("/");
+			uri.append(classId);
+			uri.append("/");
+			uri.append("schedule");
+			uri.append("/");
+			uri.append(scheduleId);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target.request().get();
+			
+			if(response.getStatus() == 200) {
+				return (Schedule) response.readEntity(Schedule.class);
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new ClassServiceException(message.getMessage());
+			}else
+				throw new ClassServiceException("The request might invalid or server is down");
+		}catch(ClassServiceException e) {
+			throw new ClassException(e.getMessage());
+		}
+	}
+
+	@Override
+	public Set<Schedule> getScheduleList(long classId) throws ClassException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			uri.append("/");
+			uri.append(classId);
+			uri.append("/");
+			uri.append("schedule");
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target.request().get();
+			
+			if(response.getStatus() == 200) {
+				return (Set<Schedule>) response.readEntity(new GenericType<Set<Schedule>>() {});
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new ClassServiceException(message.getMessage());
+			}else
+				throw new ClassServiceException("The request might invalid or server is down");
+		}catch(ClassServiceException e) {
+			throw new ClassException(e.getMessage());
+		}
+	}
+
+	@Override
+	public Student getStudentById(long classId, long studentId) throws ClassException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			uri.append("/");
+			uri.append(classId);
+			uri.append("/");
+			uri.append("student");
+			uri.append("/");
+			uri.append(studentId);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target.request().get();
+			
+			if(response.getStatus() == 200) {
+				return (Student) response.readEntity(Student.class);
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new ClassServiceException(message.getMessage());
+			}else
+				throw new ClassServiceException("The request might invalid or server is down");
+		}catch(ClassServiceException e) {
+			throw new ClassException(e.getMessage());
+		}
+	}
+
+	@Override
+	public Set<Student> getStudentList(long classId) throws ClassException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			uri.append("/");
+			uri.append(classId);
+			uri.append("/");
+			uri.append("student");
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target.request().get();
+			
+			if(response.getStatus() == 200) {
+				return (Set<Student>) response.readEntity(new GenericType<Set<Student>>() {});
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new ClassServiceException(message.getMessage());
+			}else
+				throw new ClassServiceException("The request might invalid or server is down");
+		}catch(ClassServiceException e) {
+			throw new ClassException(e.getMessage());
+		}
+	}
+	
+	@Override
 	public Class addClass(Class _class, long teacherId, long subjectId, long sectionId) throws ClassException {
 		try {
 			StringBuilder uri = new StringBuilder();
@@ -115,6 +317,70 @@ public class ClassServiceImpl implements ClassService {
 		}
 	}
 
+	@Override
+	public Schedule addScheduleById(long classId, long scheduleId) throws ClassException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			uri.append("/");
+			uri.append(classId);
+			uri.append("/");
+			uri.append("schedule");
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Builder builder = target
+					.queryParam("scheduleId", scheduleId)
+					.request(MediaType.APPLICATION_JSON);
+			Response response = builder.post(Entity.xml(new Schedule()));
+			if(response.getStatus() == 200) {
+				return (Schedule) response.readEntity(Schedule.class);
+			}else if(response.getStatus() == 400){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new ClassServiceException(message.getMessage());
+			}else
+				throw new ClassServiceException("The request might invalid or server is down");
+		}catch(ClassServiceException e) {
+			throw new ClassException(e.getMessage());
+		}
+	}
+
+	@Override
+	public Student addStudentById(long classId, long studentId) throws ClassException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			uri.append("/");
+			uri.append(classId);
+			uri.append("/");
+			uri.append("student");
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Builder builder = target
+					.queryParam("studentId", studentId)
+					.request(MediaType.APPLICATION_JSON);
+			Response response = builder.post(Entity.xml(new Student()));
+			if(response.getStatus() == 200) {
+				return (Student) response.readEntity(Student.class);
+			}else if(response.getStatus() == 400){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new ClassServiceException(message.getMessage());
+			}else
+				throw new ClassServiceException("The request might invalid or server is down");
+		}catch(ClassServiceException e) {
+			throw new ClassException(e.getMessage());
+		}
+	}
+	
 	@Override
 	public Class updateClassById(long id, Class newClass, long teacherId, long subjectId, long sectionId) 
 			throws ClassException {
@@ -180,50 +446,70 @@ public class ClassServiceImpl implements ClassService {
 	}
 
 	@Override
-	public Schedule addScheduleById(long arg0, long arg1) throws ClassException {
-		// TODO Auto-generated method stub
-		return null;
+	public Schedule deleteScheduleById(long classId, long scheduleId) throws ClassException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			uri.append("/");
+			uri.append(classId);
+			uri.append("/");
+			uri.append("schedule");
+			uri.append("/");
+			uri.append(scheduleId);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Builder builder = target.request();
+			builder.accept("application/json");
+			Response response = builder.delete();
+
+			if(response.getStatus() == 200) {
+				return (Schedule) response.readEntity(Schedule.class);
+			}else if(response.getStatus() == 400){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new ClassServiceException(message.getMessage());
+			}else
+				throw new ClassServiceException("The request might invalid or server is down");
+		}catch(ClassServiceException e) {
+			throw new ClassException(e.getMessage());
+		}
 	}
 
 	@Override
-	public Student addStudentById(long arg0, long arg1) throws ClassException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Student deleteStudentById(long classId, long studentId) throws ClassException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			uri.append("/");
+			uri.append(classId);
+			uri.append("/");
+			uri.append("student");
+			uri.append("/");
+			uri.append(studentId);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Builder builder = target.request();
+			builder.accept("application/json");
+			Response response = builder.delete();
 
-	@Override
-	public Schedule deleteScheduleById(long arg0, long arg1) throws ClassException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Student deleteStudentById(long arg0, long arg1) throws ClassException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Schedule getScheduleById(long arg0, long arg1) throws ClassException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<Schedule> getScheduleList(long arg0) throws ClassException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Student getStudentById(long arg0, long arg1) throws ClassException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<Student> getStudentList(long arg0) throws ClassException {
-		// TODO Auto-generated method stub
-		return null;
+			if(response.getStatus() == 200) {
+				return (Student) response.readEntity(Student.class);
+			}else if(response.getStatus() == 400){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new ClassServiceException(message.getMessage());
+			}else
+				throw new ClassServiceException("The request might invalid or server is down");
+		}catch(ClassServiceException e) {
+			throw new ClassException(e.getMessage());
+		}
 	}
 }

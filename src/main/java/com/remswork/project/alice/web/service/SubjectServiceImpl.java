@@ -55,6 +55,64 @@ public class SubjectServiceImpl implements SubjectService {
 			throw new SubjectException(e.getMessage());
 		}
 	}
+	
+	@Override
+	public Subject getSubjectByClassAndTeacherId(long classId, long teacherId) 
+			throws SubjectException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target
+				.queryParam("classId", classId)
+				.queryParam("teacherId", teacherId)
+				.request().get();
+			
+			if(response.getStatus() == 200) {
+				return (Subject) response.readEntity(Subject.class);
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new SubjectServiceException(message.getMessage());
+			}else
+				throw new SubjectServiceException("The request might invalid or server is down");
+		}catch(SubjectServiceException e) {
+			throw new SubjectException(e.getMessage());
+		}
+	}
+
+	@Override
+	public Subject getSubjectByScheduleId(long scheduleId) throws SubjectException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target
+				.queryParam("scheduleId", scheduleId)
+				.request().get();
+			
+			if(response.getStatus() == 200) {
+				return (Subject) response.readEntity(Subject.class);
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new SubjectServiceException(message.getMessage());
+			}else
+				throw new SubjectServiceException("The request might invalid or server is down");
+		}catch(SubjectServiceException e) {
+			throw new SubjectException(e.getMessage());
+		}
+	}
 
 	@Override
 	public List<Subject> getSubjectList() throws SubjectException {
@@ -69,6 +127,62 @@ public class SubjectServiceImpl implements SubjectService {
 			Client client = ClientBuilder.newClient();
 			WebTarget target = client.target(uri.toString());
 			Response response = target.request(MediaType.APPLICATION_XML).get();
+			
+			if(response.getStatus() == 200) {
+				return (List<Subject>) response.readEntity(new GenericType<List<Subject>>() {});
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new SubjectServiceException(message.getMessage());
+			}else
+				throw new SubjectServiceException("The request might invalid or server is down");
+		}catch(SubjectServiceException e) {
+			throw new SubjectException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public List<Subject> getSubjectListByStudentId(long studentId) throws SubjectException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target
+					.queryParam("studentId", studentId)
+					.request(MediaType.APPLICATION_XML).get();
+			
+			if(response.getStatus() == 200) {
+				return (List<Subject>) response.readEntity(new GenericType<List<Subject>>() {});
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new SubjectServiceException(message.getMessage());
+			}else
+				throw new SubjectServiceException("The request might invalid or server is down");
+		}catch(SubjectServiceException e) {
+			throw new SubjectException(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Subject> getSubjectListByTeacherId(long teacherId) throws SubjectException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target
+					.queryParam("teacherId", teacherId)
+					.request(MediaType.APPLICATION_XML).get();
 			
 			if(response.getStatus() == 200) {
 				return (List<Subject>) response.readEntity(new GenericType<List<Subject>>() {});

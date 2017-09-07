@@ -1,6 +1,7 @@
 package com.remswork.project.alice.web.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -54,7 +55,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 			throw new ScheduleException(e.getMessage());
 		}
 	}
-
+	
 	@Override
 	public List<Schedule> getScheduleList() throws ScheduleException {
 		try {
@@ -71,6 +72,32 @@ public class ScheduleServiceImpl implements ScheduleService {
 			
 			if(response.getStatus() == 200) {
 				return (List<Schedule>) response.readEntity(new GenericType<List<Schedule>>() {});
+			}else if(response.getStatus() == 404){
+				Message message = (Message) response.readEntity(Message.class);
+				throw new ScheduleServiceException(message.getMessage());
+			}else
+				throw new ScheduleServiceException("The request might invalid or server is down");
+		}catch(ScheduleServiceException e) {
+			throw new ScheduleException(e.getMessage());
+		}
+	}
+	
+	@Override
+	public Set<Schedule> getScheduleListByTeacherId(long teacherId) throws ScheduleException {
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append(targetProperties.getDomain());
+			uri.append("/");
+			uri.append(targetProperties.getBaseUri());
+			uri.append("/");
+			uri.append(payload);
+			
+			Client client = ClientBuilder.newClient();
+			WebTarget target = client.target(uri.toString());
+			Response response = target.queryParam("teacherId", teacherId).request().get();
+			
+			if(response.getStatus() == 200) {
+				return (Set<Schedule>) response.readEntity(new GenericType<Set<Schedule>>() {});
 			}else if(response.getStatus() == 404){
 				Message message = (Message) response.readEntity(Message.class);
 				throw new ScheduleServiceException(message.getMessage());
