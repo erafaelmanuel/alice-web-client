@@ -2,6 +2,7 @@ package com.remswork.project.alice.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.remswork.project.alice.exception.ClassException;
 import com.remswork.project.alice.exception.SectionException;
 import com.remswork.project.alice.exception.StudentException;
 import com.remswork.project.alice.model.Section;
 import com.remswork.project.alice.model.Student;
+import com.remswork.project.alice.web.service.ClassServiceImpl;
 import com.remswork.project.alice.web.service.SectionServiceImpl;
 import com.remswork.project.alice.web.service.StudentServiceImpl;
 
@@ -25,6 +28,8 @@ public class StudentController {
 	private StudentServiceImpl studentService;
 	@Autowired
 	private SectionServiceImpl sectionService;
+	@Autowired
+	private ClassServiceImpl classService;
 	
 	@RequestMapping(value = "get", method = RequestMethod.POST)
 	public String getStudent(
@@ -109,6 +114,21 @@ public class StudentController {
 			modelMap.put("sectionList", sectionList);
 			return "student";
 		} catch (StudentException | SectionException e) {
+			e.printStackTrace();
+			return "error";
+		}
+		
+	}
+	
+	@RequestMapping(value="clist", method = RequestMethod.GET)
+	public String getStudentListByClassId(@RequestParam("classId") long classId, ModelMap modelMap) {
+		try {
+			Set<Student> studentList = classService.getStudentList(classId);
+			List<Section> sectionList = sectionService.getSectionList();
+			modelMap.put("studentList", studentList);
+			modelMap.put("sectionList", sectionList);
+			return "student";
+		} catch (ClassException | SectionException e) {
 			e.printStackTrace();
 			return "error";
 		}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css" th:href="@{/css/bootstrap/bootstrap.min.css}"/>
+	<link rel="stylesheet" href="../css/style.css" th:href="@{/css/style.css}"/>
+	<title>Schedule information</title>
+	</head>
+	<body>
+		<div class="loading-pane">
+			<img th:src="@{/image/simple-loading.gif}" id="image-loading" align="middle"/>
+		</div>
+		<nav class="navbar navbar-default navbar-fixed-top" id="navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">Alice Project</a>
+				</div>
+				
+				<ul class=" nav navbar-nav">
+				  <li class="home"><a href="#"><span></span> Class</a></li>
+				   <li class="home"><a href="/teacher"><span ></span> Teacher</a></li>
+				    <li class="home"><a href="/schedule"><span ></span> Schedule</a></li>
+				    <li class="home"><a href="/subject"><span ></span> Subject</a></li>
+				     <li class="home"><a href="/section"><span ></span> Section</a></li>
+				     <li class="home"><a href="#"><span ></span> Schedule</a></li>
+				    <li class="home"><a href="/department"><span></span> Department</a></li>
+				</ul>
+				
+				<ul class="nav navbar-nav navbar-right">
+
+				  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+			<div class="container" id="table-container">
+				<h2 id="label-title"><a href="/schedule">Schedule</a></h2>
+				<div class="row">
+					<div class="col-md-3">
+						<form class="form-inline">
+							<div class="form-group">
+								<label class="sr-only" for="exampleInputAmount">Schedule</label>
+							  </div>
+						</form>
+					</div>
+				</div>
+				<br />
+				<br />
+				<div id="table-cus">
+					<table class="table">
+						<thead>
+						  <tr class="">
+							<th>ID</th>
+							<th>Day</th>
+							<th>Room</th>
+							<th>Time</th>
+							<th>Period</th>
+						  </tr>
+						</thead>
+						<tbody>
+							<tr  th:each="schedule, iterStat : ${scheduleList}" th:class="${iterStat.even} ? 'active' : 'default'">
+								<td th:text="${schedule.id}" />
+								<td th:text="${schedule.day}" />
+								<td th:text="${schedule.room}" />
+								<td th:text="${schedule.time}" />
+								<td th:text="${schedule.period}" />
+								<td>
+									<button type="button" class="btn btn-default" data-toggle="modal" th:attr="data-target='#update-schedule-modal-' + ${schedule.id}">
+										<span class="glyphicon glyphicon-pencil"></span> Update
+									</button>
+									<button th:value="${schedule.id}" type="submit" class="btn btn-default" id="btn-delete"> 
+										<span class="glyphicon glyphicon-remove"></span> Delete
+									</button>
+									<a th:href="'/schedule/view?id=' + ${schedule.id}">
+										<button type="button" class="btn btn-default" id="btn-view">
+												<span class="glyphicon glyphicon-zoom-in"></span> View
+										</button>
+									</a>
+								</td>
+							</tr>
+						</tbody>
+				  </table>
+				</div>
+			</div>
+	<script src="../js/jquery-3.2.1.min.js" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+	<script src="../js/bootstrap/bootstrap.min.js" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+	<script>
+	/**
+		$(document).ready(function(){
+			
+			var loading = $(".loading-pane");
+			$(document).on('click', 'button[id="btn-delete"]', function() {
+				var id = $(this).val();
+				if (confirm('Are you sure you want to delete the schedule with id : ' + id)) {
+					loading.show();
+					$.post("/schedule/delete", {id : id}, function(data, status) {
+						$("#table-cus").html(data);	
+						loading.hide();
+						hideMessage(8000);
+					});	
+				}
+			});
+			
+			$('#btn-search').click(function() {
+				var input = $("#schedule-query").val();
+				if(input.trim() != "") {
+					loading.show();
+					$.post("/schedule/get", {query : input}, function(data, status) {
+						$("#table-cus").html(data);
+						loading.hide();
+						hideMessage(8000, 2000);
+					});
+				}
+			});
+		});
+		
+		function hideMessage(duration) {
+			setTimeout(function() {
+				$('#response-message').fadeOut(2000);
+			},duration);
+		}
+		**/
+	</script>
+	</body>
+</html>

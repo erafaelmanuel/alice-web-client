@@ -10,11 +10,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.remswork.project.alice.exception.ClassException;
 import com.remswork.project.alice.exception.DepartmentException;
+import com.remswork.project.alice.exception.SectionException;
+import com.remswork.project.alice.exception.SubjectException;
 import com.remswork.project.alice.exception.TeacherException;
 import com.remswork.project.alice.model.Department;
+import com.remswork.project.alice.model.Section;
+import com.remswork.project.alice.model.Subject;
 import com.remswork.project.alice.model.Teacher;
+import com.remswork.project.alice.web.service.ClassServiceImpl;
 import com.remswork.project.alice.web.service.DepartmentServiceImpl;
+import com.remswork.project.alice.web.service.SectionServiceImpl;
+import com.remswork.project.alice.web.service.SubjectServiceImpl;
 import com.remswork.project.alice.web.service.TeacherServiceImpl;
 
 @Controller
@@ -25,6 +33,12 @@ public class TeacherController {
 	private TeacherServiceImpl teacherService;
 	@Autowired
 	private DepartmentServiceImpl departmentService;
+	@Autowired
+	private ClassServiceImpl classService;
+	@Autowired
+	private SubjectServiceImpl subjectService;
+	@Autowired
+	private SectionServiceImpl sectionService;
 	
 	@RequestMapping(value = "get", method = RequestMethod.POST)
 	public String getTeacher(
@@ -77,7 +91,7 @@ public class TeacherController {
 			}
 			modelMap.put("teacherList", teacherList);
 			modelMap.put("departmentList", departmentList);
-			return "teacher-table";
+			return "fragment/teacher-table";
 		} catch (TeacherException | DepartmentException e) {
 			e.printStackTrace();
 			return "error";
@@ -88,9 +102,17 @@ public class TeacherController {
 	public String getTeacherAndView(@RequestParam("id") long id, ModelMap modelMap) {
 		try {
 			Teacher teacher = teacherService.getTeacherById(id);
+			List<com.remswork.project.alice.model.Class> classList = 
+					classService.getClassListByTeacherId(id);
+			List<Subject> subjectList = subjectService.getSubjectList();
+			List<Section> sectionList = sectionService.getSectionList();
 			modelMap.put("teacher", teacher);
+			modelMap.put("cclassList", classList);
+			modelMap.put("subjectList", subjectList);
+			modelMap.put("sectionList", sectionList);
 			return "teacher-view";
-		} catch (TeacherException e) {
+		} catch (TeacherException | ClassException | 
+				SubjectException | SectionException e) {
 			e.printStackTrace();
 			return "error";
 		}

@@ -305,7 +305,7 @@ public class ClassServiceImpl implements ClassService {
 					.queryParam("sectionId", sectionId)
 					.request(MediaType.APPLICATION_JSON);
 			Response response = builder.post(Entity.xml(_class));
-			if(response.getStatus() == 200) {
+			if(response.getStatus() == 200 || response.getStatus() == 201) {
 				return (Class) response.readEntity(Class.class);
 			}else if(response.getStatus() == 400){
 				Message message = (Message) response.readEntity(Message.class);

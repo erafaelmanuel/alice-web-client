@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1"/>
+		<title>CCS Manager</title>
+	</head>
+	<body>
+		<button class="btn btn-info"> 
+		<th:block th:text="${schedule.day} + ' / ' + ${schedule.room} + ' / ' + ${schedule.time} + ' - ' + ${schedule.period}" />
+			&nbsp;&nbsp;&nbsp;<span id="button-close" th:attr="data-value=${schedule.id}" aria-hidden="true">&times;</span>
+		</button>
+	</body>
+</html>
