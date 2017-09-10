@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
@@ -64,6 +65,8 @@ public class XcellHelperBean {
 			final int header[] = new int[colSize];
 			
 			for(int i=0; i<colSize; i++) {
+				if(sheet.getRow(0).getCell(i).getCellType() != Cell.CELL_TYPE_STRING)
+					continue;
 				if(sheet.getRow(0).getCell(i).getStringCellValue().equalsIgnoreCase("studentNumber"))
 					header[0] = i;
 				if(sheet.getRow(0).getCell(i).getStringCellValue().equalsIgnoreCase("firstName"))
@@ -79,12 +82,30 @@ public class XcellHelperBean {
 			}
 			for(int row=1; row<=size; row++ ) {
 				Student student = new Student();
-				student.setStudentNumber((long) sheet.getRow(row).getCell(header[0]).getNumericCellValue());
-				student.setFirstName(sheet.getRow(row).getCell(header[1]).getStringCellValue());
-				student.setLastName(sheet.getRow(row).getCell(header[2]).getStringCellValue());
-				student.setMiddleName(sheet.getRow(row).getCell(header[3]).getStringCellValue());
-				student.setGender(sheet.getRow(row).getCell(header[4]).getStringCellValue());
-				student.setAge((int) sheet.getRow(row).getCell(header[5]).getNumericCellValue());
+				if(sheet.getRow(row).getCell(header[0]).getCellType() == Cell.CELL_TYPE_NUMERIC)
+					student.setStudentNumber((long) sheet.getRow(row).getCell(header[0]).getNumericCellValue());
+				else
+					student.setStudentNumber(0);
+				if(sheet.getRow(row).getCell(header[1]).getCellType() == Cell.CELL_TYPE_STRING)
+					student.setFirstName(sheet.getRow(row).getCell(header[1]).getStringCellValue());
+				else
+					student.setFirstName("none");
+				if(sheet.getRow(row).getCell(header[2]).getCellType() == Cell.CELL_TYPE_STRING)
+					student.setLastName(sheet.getRow(row).getCell(header[2]).getStringCellValue());
+				else
+					student.setLastName("none");
+				if(sheet.getRow(row).getCell(header[3]).getCellType() == Cell.CELL_TYPE_STRING)
+					student.setMiddleName(sheet.getRow(row).getCell(header[3]).getStringCellValue());
+				else
+					student.setMiddleName("none");
+				if(sheet.getRow(row).getCell(header[4]).getCellType() == Cell.CELL_TYPE_STRING)
+					student.setGender(sheet.getRow(row).getCell(header[4]).getStringCellValue());
+				else
+					student.setGender("Male");
+				if(sheet.getRow(row).getCell(header[5]).getCellType() == Cell.CELL_TYPE_NUMERIC)
+					student.setAge((int) sheet.getRow(row).getCell(header[5]).getNumericCellValue());
+				else
+					student.setAge(0);
 				studentList.add(student);
 			}
 			return studentList;

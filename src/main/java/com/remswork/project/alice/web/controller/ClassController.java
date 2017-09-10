@@ -1,5 +1,8 @@
 package com.remswork.project.alice.web.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -9,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.remswork.project.alice.exception.ClassException;
-import com.remswork.project.alice.model.Class;
 import com.remswork.project.alice.model.Student;
 import com.remswork.project.alice.web.bean.XcellHelperBean;
 import com.remswork.project.alice.web.service.ClassServiceImpl;
@@ -41,38 +43,18 @@ public class ClassController {
 	@Autowired
 	private XcellHelperBean xcellHelperBean;
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public String get(
-			@RequestParam("teacherId") long teacherId,
-			@RequestParam("subjectId") long subjectId,
-			@RequestParam("sectionId") long sectionId) {
-		
-		Class _class = new Class();
-		
-		try {
-			classService.addClass(_class, teacherId, subjectId, sectionId);
-		} catch (ClassException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return "nothing";
-	}
-	
 	@RequestMapping(value="add", method=RequestMethod.POST)
 	public String addClass(@RequestParam("teacherId") long teacherId,
 			@RequestParam("subjectId") long subjectId,
 			@RequestParam("sectionId") long sectionId,
 			@RequestParam("file") MultipartFile file,
 			@RequestParam("scheduleId") long[] scheduleIdList, ModelMap modelMap) {
-			
 		try {
-			_class = new Class();
+			_class = new com.remswork.project.alice.model.Class();
 			_class = classService.addClass(_class, teacherId, subjectId, sectionId);
 			if(!file.isEmpty()) {
 				for(Student student : xcellHelperBean.loadFile(xcellHelperBean.convert(file), true)) {
 					new Thread(new Runnable() {
-
 						@Override
 						public void run() {
 							try {
@@ -92,19 +74,16 @@ public class ClassController {
 								e.printStackTrace();
 							}
 						}
-						
 					}).start();
 				}
 			}
 			for(long id : scheduleIdList) {
 				new Thread(new Runnable() {
-
 					@Override
 					public void run() {
 						try {
 							classService.addScheduleById(_class.getId(), id);
 						} catch (ClassException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -117,5 +96,21 @@ public class ClassController {
 			e.printStackTrace();
 			return "error";
 		}
+	}
+	
+	@RequestMapping(value="delete",method=RequestMethod.DELETE)
+	public String deleteClassById(@RequestParam("teacherId") long teacherId,
+			@RequestParam("classId") long classId, ModelMap modelMap) {
+		
+		List<com.remswork.project.alice.model.Class> classList = new ArrayList<>();
+		try {
+			classService.deleteClassById(classId);
+			classList = classService.getClassListByTeacherId(teacherId);
+		} catch (ClassException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		modelMap.put("cclassList", classList);
+		return "class-table";
 	}
 }
