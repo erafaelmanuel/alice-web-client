@@ -8,7 +8,7 @@
 		<div class="loading-pane">
 			<img th:src="@{/image/simple-loading.gif}" id="image-loading" align="middle"/>
 		</div>
-		<th:block th:include="fragment/header" />
+		<th:block th:include="fragment/header :: header" />
 		<div id="table-container">
 			<div id="table-nav">
 				<h3 id="label-title">Teacher</h3>
@@ -22,7 +22,7 @@
 						<form class="form-inline">
 							<div class="form-group">
 								<label class="sr-only" for="exampleInputAmount">Teacher</label>
-								<div class="input-group">
+								<div id="search-group" class="input-group">
 									<input type="text" class="form-control" id="teacher-query" placeholder="Teacher id, name or email" />
 									<div class="input-group-addon" id="btn-search"><span class="glyphicon glyphicon-search"></span></div>
 								</div>
@@ -119,7 +119,11 @@
 						$('#response-message').css("display","block");
 						loading.hide();
 						hideMessage(8000, 2000);
+						$("#search-group").removeClass("has-error has-feedback");
 					});
+				}else {
+					$("#search-group").removeClass("has-error has-feedback");
+					$("#search-group").addClass("has-error has-feedback");	
 				}
 			});
 		});

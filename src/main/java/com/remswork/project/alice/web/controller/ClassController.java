@@ -98,19 +98,18 @@ public class ClassController {
 		}
 	}
 	
-	@RequestMapping(value="delete",method=RequestMethod.DELETE)
+	@RequestMapping(value="delete",method=RequestMethod.POST)
 	public String deleteClassById(@RequestParam("teacherId") long teacherId,
 			@RequestParam("classId") long classId, ModelMap modelMap) {
-		
 		List<com.remswork.project.alice.model.Class> classList = new ArrayList<>();
 		try {
 			classService.deleteClassById(classId);
 			classList = classService.getClassListByTeacherId(teacherId);
 		} catch (ClassException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		modelMap.put("cclassList", classList);
-		return "class-table";
+		return "fragment/class-table";
 	}
 }

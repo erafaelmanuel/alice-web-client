@@ -5,20 +5,25 @@
 		<link rel="stylesheet" href="../css/teacher-display.css" th:href="@{/css/teacher-display.css}"/>
 	</head>
 	<body>
+		<div class="loading-pane">
+			<img th:src="@{/image/simple-loading.gif}" id="image-loading" align="middle"/>
+		</div>
 		<th:block th:include="fragment/header :: header" />
 		<div id="teacher-wrapper">
 			<div class="container">
-				<div class="panel panel-success">
+				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Teacher Detail</h3>
+						<h3 class="panel-title" style="font-weight:bold;color:#34495e;">Teacher Detail</h3>
 					</div>
 					<div class="panel-body">
-						<img  width="100px" height="100px" src="../image/project.jpg" th:src="@{/image/profile.jpg}"/>
-						<p><b><th:block th:text="${teacher.firstName} + ' ' + ${teacher.lastName}" /></b></p>
+						<img  width="100px" height="100px" style="margin-bottom:10px;" src="../image/user_img.png" th:src="@{/image/user_img.png}"/>
 						<input id="teacher-detail-id" type="hidden" th:value="${teacher.id}" />
-						<br />
+						<p>ID : <b><th:block th:text="${teacher.id}" /></b></p>
+						<p>First Name : <b><th:block th:text="${teacher.firstName}" /></b></p>
+						<p>Last Name : <b><th:block th:text="${teacher.lastName}" /></b></p>
+						<p>Middle Name : <b><th:block th:text="${teacher.middleName}" /></b></p>
 						<p>Email : <b><th:block th:text="${teacher.email}" /></b></p>
-						<p>Department : <b><th:block th:text="(${teacher.department} != null ? ${teacher.department.name} : 'none')" /></b></p>
+						<p>Department : <b><th:block th:text="(${teacher.department} != null ? ${teacher.department.name} : 'n/a')" /></b></p>
 					</div>
 				</div>
             </div>
@@ -126,7 +131,7 @@
 									<span id="day-item" class="selecter-item" data-value="Monday">Monday</span>
 									<span id="day-item" class="selecter-item" data-value="Tuesday">Tuesday</span>
 									<span id="day-item" class="selecter-item" data-value="Wednesday">Wednesday</span>
-									<span id="day-item" class="selecter-item" data-value="Thrusday">Thursday</span>
+									<span id="day-item" class="selecter-item" data-value="Thursday">Thursday</span>
 									<span id="day-item" class="selecter-item" data-value="Friday">Friday</span>
 									<span id="day-item" class="selecter-item" data-value="Saturday">Saturday</span>
 									<span id="day-item" class="selecter-item" data-value="Sunday">Sunday</span>
@@ -391,13 +396,17 @@
 				$(document).on("click", "span[id='button-cdelete']", function() {
 					
 					var teacherId= $("#teacher-detail-id").val();
-					var classId = $("#button-cdelete").attr("data-value");
-					alert(teacherId + " " + classId);
-						$.post('/class/delete',
-								{teacherId : teacherId, classId : classId},
-								function(data, status) {
-									$("#class-table").html(data);
-								});
+					var classId = $(this).attr("data-value");
+					var loading = $(".loading-pane");
+						if (confirm('Are you sure you want to delete the class with id : ' + classId)) {
+							loading.show();
+							$.post('/class/delete',
+									{teacherId : teacherId, classId : classId},
+									function(data, status) {
+										$("#class-table").html(data);
+										loading.hide();
+									});
+						}
 				});
 				
 				
