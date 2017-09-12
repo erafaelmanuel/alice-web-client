@@ -71,7 +71,7 @@ public class ScheduleController {
 		} catch (ScheduleException | ClassException e) {
 			e.printStackTrace();
 		}
-		return "fragment/schedule-table";
+		return "schedule";
 	}
 	
 	@RequestMapping(value="c/update", method=RequestMethod.POST)
@@ -94,7 +94,7 @@ public class ScheduleController {
 		} catch (ScheduleException | ClassException e) {
 			e.printStackTrace();
 		}
-		return "fragment/schedule-table";
+		return "schedule";
 	}
 
 	@RequestMapping
@@ -126,7 +126,7 @@ public class ScheduleController {
 		if(scheduleList.size() < 1) {
 			modelMap.put("responseMessage", "No result found.");
 		}else {
-			modelMap.put("responseMessage", scheduleList.size() + " Result found.");
+			modelMap.put("responseMessage", "Successfully deleted.");
 		}
 		modelMap.put("scheduleList", scheduleList);
 		return "fragment/schedule-table";

@@ -112,4 +112,9 @@ public class ClassController {
 		modelMap.put("cclassList", classList);
 		return "fragment/class-table";
 	}
+	
+	@RequestMapping(value="dox",method=RequestMethod.GET)
+	public String doX() {
+		return "test";
+	}
 }
