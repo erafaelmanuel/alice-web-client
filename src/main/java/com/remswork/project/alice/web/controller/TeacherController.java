@@ -104,11 +104,13 @@ public class TeacherController {
 			Teacher teacher = teacherService.getTeacherById(id);
 			List<com.remswork.project.alice.model.Class> classList = 
 					classService.getClassListByTeacherId(id);
-			List<Subject> subjectList = subjectService.getSubjectList();
+			List<Subject> subjectList = subjectService.getSubjectListByTeacherId(id);
+			List<Subject> allSubject = subjectService.getSubjectList();
 			List<Section> sectionList = sectionService.getSectionList();
 			modelMap.put("teacher", teacher);
 			modelMap.put("cclassList", classList);
 			modelMap.put("subjectList", subjectList);
+			modelMap.put("allSubject", allSubject);
 			modelMap.put("sectionList", sectionList);
 			return "teacher-view";
 		} catch (TeacherException | ClassException | 

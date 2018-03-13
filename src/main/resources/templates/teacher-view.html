@@ -52,9 +52,9 @@
 										<div class="selecter  cover closed" tabindex="0">
 											<div class="selecter  closed" tabindex="0" id="subject-list">
 												<input type="hidden" name="subjectId"/>
-												<span class="selecter-selected placeholder" th:text="${subjectList[0].name}"></span>
+												<span class="selecter-selected placeholder" th:text="${allSubject[0].name}"></span>
 												<div class="selecter-options" style="display:none; position:absolute;z-index:3;">
-													<span id="subject-item" th:each="subject, iterStat : ${subjectList}" class="selecter-item" th:attr="data-value=${subject.id}" th:text="${subject.name}"></span>
+													<span id="subject-item" th:each="subject, iterStat : ${allSubject}" class="selecter-item" th:attr="data-value=${subject.id}" th:text="${subject.name}"></span>
 												</div>
 											</div>
 										</div>

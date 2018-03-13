@@ -114,6 +114,7 @@ public class SubjectServiceImpl implements SubjectService {
 		}
 	}
 
+	@Deprecated
 	@Override
 	public List<Subject> getSubjectList() throws SubjectException {
 		try {
@@ -177,6 +178,7 @@ public class SubjectServiceImpl implements SubjectService {
 			uri.append(targetProperties.getBaseUri());
 			uri.append("/");
 			uri.append(payload);
+			uri.append("/1");
 			
 			Client client = ClientBuilder.newClient();
 			WebTarget target = client.target(uri.toString());
