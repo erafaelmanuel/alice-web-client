@@ -197,7 +197,7 @@ public class SubjectServiceImpl implements SubjectService {
 			throw new SubjectException(e.getMessage());
 		}
 	}
-	
+
 	@Override
 	public Subject addSubject(Subject schedule) throws SubjectException {
 		try {

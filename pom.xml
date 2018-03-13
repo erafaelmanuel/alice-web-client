@@ -55,7 +55,7 @@
 		<dependency>
 		    <groupId>com.github.erafaelmanuel</groupId>
 		    <artifactId>alice-core</artifactId>
-		    <version>-SNAPSHOT</version>
+		    <version>v1.2.6-beta.2</version>
 		</dependency>
 		
 		<dependency>
