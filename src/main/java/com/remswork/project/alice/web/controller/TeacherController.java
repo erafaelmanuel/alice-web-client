@@ -143,7 +143,7 @@ public class TeacherController {
 			@RequestParam("email") String email, 
 			@RequestParam("departmentId") long departmentId, ModelMap modelMap) {
 		try {
-			Teacher teacher = new Teacher(firstName, lastName, middleName, email);
+			Teacher teacher = new Teacher(firstName, middleName, lastName, email);
 			teacherService.addTeacher(teacher, departmentId);
 			List<Teacher> teacherList = teacherService.getTeacherList();
 			List<Department> departmentList = departmentService.getDepartmentList();
